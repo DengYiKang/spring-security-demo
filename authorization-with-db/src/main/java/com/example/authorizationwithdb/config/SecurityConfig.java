@@ -1,5 +1,6 @@
 package com.example.authorizationwithdb.config;
 
+import com.example.authorizationwithdb.filter.VerifyCodeFilter;
 import com.example.authorizationwithdb.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
@@ -31,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     MyAccessDecisionManager myAccessDecisionManager;
     @Autowired
     MyAccessDeniedHandler myAccessDeniedHandler;
+    @Autowired
+    VerifyCodeFilter verifyCodeFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -48,6 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //配置过滤器
+        http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
         /*注意matchers之间有先后顺序之分，若满足前面某个matchers，后面的matchers都不会进行匹配*/
         http
                 .authorizeRequests()
@@ -72,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/index.html", "/static/**", "/favicon.ico","/error","/login_p");
+        web.ignoring().antMatchers("/index.html", "/static/**", "/favicon.ico","/error","/login_p", "/vercode");
     }
 
     @Bean
