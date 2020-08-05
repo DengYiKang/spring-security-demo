@@ -19,7 +19,7 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();
-        ResponseBean info = new ResponseBean(500, accessDeniedException.getMessage(), null);
+        ResponseBean info = new ResponseBean(403, accessDeniedException.getMessage(), null);
         writer.write(new ObjectMapper().writeValueAsString(info));
         writer.flush();
         writer.close();
