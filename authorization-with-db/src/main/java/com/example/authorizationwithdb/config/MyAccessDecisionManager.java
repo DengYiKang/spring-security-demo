@@ -12,9 +12,21 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+/**
+ * 决定某些角色是否能访问给定的资源
+ */
 @Component
 public class MyAccessDecisionManager implements AccessDecisionManager {
 
+
+    /**
+     *
+     * @param authentication 存有当前用户的角色（权限）
+     * @param object 资源
+     * @param configAttributes 访问object资源所需的权限
+     * @throws AccessDeniedException
+     * @throws InsufficientAuthenticationException
+     */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         //从authentication中获取当前用户具有的角色(权限)

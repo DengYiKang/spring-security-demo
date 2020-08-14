@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 拦截login的POST请求，检查验证码是否为空或者验证码是否正确
+ */
 @Component
 public class VerifyCodeFilter extends GenericFilterBean {
     private String filterProcessUrl = "/login";

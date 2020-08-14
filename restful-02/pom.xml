@@ -13,4 +13,12 @@
     <name>restful-02</name>
     <description>json格式登录</description>
 
+    <!--security-->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
